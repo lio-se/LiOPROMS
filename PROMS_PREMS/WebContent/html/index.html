@@ -32,24 +32,50 @@
 	<script type="text/javascript" src="js/test.js"></script>
 	<div class="container">
 		<h1>Kontakta API för MVKs formulärtjänst</h1>
-		<div id="create_form" class="six columns">
+		<div id="create_form">
 			<script type="text/javascript">var result1;</script>
 			<h2>Här kan du skapa ett formulär från en existerande mall</h2>
 			<p>
-				Ange id för formulmallen: <input id="template_id"
+				Ange id för formulärmallen: <input id="template_id"
 					value="d2099043-b9b0-4de8-8b7e-eb232f906943" size="35" /><br />
 				versionsnummer: <input id="template_version" size="3" value="3" /><br />
 				<button id="create_form_button">Skapa formulär</button>
 			</p>
 			<div id="result"></div>
 		</div>
-		<div id="get_form" class="six columns">
+		<div id="get_form">
 			<script type="text/javascript">var result1;</script>
 			<h2>Här kan du hämta ett formulär</h2>
 			<p>
 				Ange id för formuläret: <input id="form_id"
 					value="54747757e4b001c5ef2df220" size="35" /><br />
 				<button id="get_form_button">Hämta formulär</button>
+			</p>
+			<div id="result"></div>
+		</div>
+		<div id="answer_form">
+		
+			<h2>Här kan du svara på ett formulär</h2>
+			<h4>Svara på en sida i taget.</h4>
+			<p>
+				Ange id för formuläret: <input id="form_id"
+					value="54747757e4b001c5ef2df220" size="35" /><br />
+				Ange formulärsida: <input id="form_"
+					value="1" size="3" /><br />
+					<textarea id="formpage_answers" style="width:800px; height:200px"><urn:pageAnswer xmlns:urn="urn:org:apigw:infrastructure:supportservices:forminteraction:MimeTypes:1" 
+                xmlns:urn2="urn:org:apigw:infrastructure:supportservices:forminteraction:1"> 
+  <urn2:questionAnswerBlock> 
+    <urn2:blockNumber>1</urn2:blockNumber> 
+    <urn2:questionAnswer> 
+      <urn2:answer> 
+        <urn2:value>188803099368</urn2:value> 
+      </urn2:answer> 
+      <urn2:questionNumber>1</urn2:questionNumber> 
+    </urn2:questionAnswer> 
+    </urn2:questionAnswerBlock> 
+    </urn:pageAnswer>
+					</textarea> <br/>
+				<button id="answer_form_button">Svara formulär</button>
 			</p>
 			<div id="result"></div>
 		</div>
