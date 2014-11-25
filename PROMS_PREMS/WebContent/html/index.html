@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+<!-- Basic Page Needs
+  ================================================== -->
+<meta charset="utf-8">
+<title>Formulärtjänst Mina Vårdkontakter</title>
+<meta name="description" content="forms">
+<meta name="author" content="Johanna Uhlin">
+
+<!-- Mobile Specific Metas
+  ================================================== -->
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!--[if lt IE 9]>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+</head>
+
+<body>
+	<!-- Primary Page Layout
+	================================================== -->
+
+
+	<script type="text/javascript" src="js/test.js"></script>
+	<div class="container">
+		<h1>Kontakta API för MVKs formulärtjänst</h1>
+		<div id="create_form" class="six columns">
+			<script type="text/javascript">var result1;</script>
+			<h2>Här kan du skapa ett formulär från en existerande mall</h2>
+			<p>
+				Ange id för formulmallen: <input id="template_id"
+					value="d2099043-b9b0-4de8-8b7e-eb232f906943" size="35" /><br />
+				versionsnummer: <input id="template_version" size="3" value="3" /><br />
+				<button id="create_form_button">Skapa formulär</button>
+			</p>
+			<div id="result"></div>
+		</div>
+		<div id="get_form" class="six columns">
+			<script type="text/javascript">var result1;</script>
+			<h2>Här kan du hämta ett formulär</h2>
+			<p>
+				Ange id för formuläret: <input id="form_id"
+					value="54747757e4b001c5ef2df220" size="35" /><br />
+				<button id="get_form_button">Hämta formulär</button>
+			</p>
+			<div id="result"></div>
+		</div>
+	</div>
+
+
+	<!-- End Document
+================================================== -->
+</body>
+</html>
