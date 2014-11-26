@@ -60,20 +60,30 @@
 			<p>
 				Ange id för formuläret: <input id="form_id"
 					value="54747757e4b001c5ef2df220" size="35" /><br />
-				Ange formulärsida: <input id="form_"
+				Ange formulärsida: <input id="form_page"
 					value="1" size="3" /><br />
 					<textarea id="formpage_answers" style="width:800px; height:200px"><urn:pageAnswer xmlns:urn="urn:org:apigw:infrastructure:supportservices:forminteraction:MimeTypes:1" 
                 xmlns:urn2="urn:org:apigw:infrastructure:supportservices:forminteraction:1"> 
-  <urn2:questionAnswerBlock> 
+                  <urn2:pageNumber>1</urn2:pageNumber>
+   <urn2:questionAnswerBlock> 
     <urn2:blockNumber>1</urn2:blockNumber> 
-    <urn2:questionAnswer> 
+     <urn2:questionAnswer> 
       <urn2:answer> 
-        <urn2:value>188803099368</urn2:value> 
+        <urn2:value>answer question 1</urn2:value> 
       </urn2:answer> 
       <urn2:questionNumber>1</urn2:questionNumber> 
     </urn2:questionAnswer> 
-    </urn2:questionAnswerBlock> 
-    </urn:pageAnswer>
+    
+     <urn2:questionAnswer> 
+      <urn2:answer> 
+        <urn2:answerAlternativeNumber>1</urn2:answerAlternativeNumber> 
+      </urn2:answer> 
+      <urn2:questionNumber>2</urn2:questionNumber> 
+    </urn2:questionAnswer>
+     
+  </urn2:questionAnswerBlock>
+</urn:pageAnswer>
+					
 					</textarea> <br/>
 				<button id="answer_form_button">Svara formulär</button>
 			</p>

@@ -35,7 +35,7 @@ public class MVKServlet extends HttpServlet {
 		if (requestvalue != null) {
 
 			String charset = "UTF-8";
-			
+
 			/*
 			 * Creating a form from a template_id
 			 */
@@ -134,6 +134,8 @@ public class MVKServlet extends HttpServlet {
 						.setRequestProperty(
 								"Content-Type",
 								"application/vnd-riv.infrastructure.supportservices.forminteraction.Form.v1+xml");
+				connection.setDoOutput(true);
+
 				int responsecode1 = connection.getResponseCode();
 				System.out.println(connection.getResponseCode() + ": "
 						+ connection.getResponseMessage());
@@ -173,65 +175,14 @@ public class MVKServlet extends HttpServlet {
 				}
 			}
 			/*
-			 * Submitting a form 
+			 * Submitting a form
 			 */
-			else if (requestvalue[0].equals("answerForm")){
-				String form_id = request.getParameterValues("formID")[0];
-				String form_page = request.getParameterValues("formPage")[0];
-				
-				URL url = new URL(mvk + "/" + form_id);
-				HttpURLConnection connection = (HttpURLConnection) url
-						.openConnection();
-				connection.setRequestProperty("Authorization",
-						"Bearer cf70be6c-9dcd-11e1-8c70-12313c036113");
-				connection
-						.setRequestProperty(
-								"Content-Type",
-								"application/vnd-riv.infrastructure.supportservices.forminteraction.Form.v1+xml");
-				int responsecode1 = connection.getResponseCode();
-				System.out.println(connection.getResponseCode() + ": "
-						+ connection.getResponseMessage());
-				Map<String, List<String>> map1 = connection.getHeaderFields();
-				for (Map.Entry<String, List<String>> entry : map1.entrySet()) {
-					System.out.println("Key : " + entry.getKey()
-							+ " , Value : " + entry.getValue());
-				}
-				try {
-					InputStream is = connection.getInputStream();
-					BufferedReader br = new BufferedReader(
-							new InputStreamReader(is));
-					String inputLine = null;
-
-					OutputStream out = response.getOutputStream();
-					StringBuffer buffer = new StringBuffer();
-
-					while ((inputLine = br.readLine()) != null) {
-						if (inputLine.trim().length() == 0) {
-							continue;
-						} else {
-							System.out.println(inputLine);
-							buffer.append((inputLine + "\n"));
-						}
-					}
-					out.write(buffer.toString().getBytes());
-
-				} catch (Exception e) {
-					e.printStackTrace();
-					RequestDispatcher headerview = request
-							.getRequestDispatcher("html/error.html");
-					headerview.include(request, response);
-
-				} finally {
-					if (connection != null)
-						connection.disconnect();
-				}
+			else {
+				System.out.println("error no request parameters."
+						+ request.getParameterMap());
 			}
 
-		} else {
-			System.out.println("error no request parameters."
-					+ request.getParameterMap());
 		}
-
 	}
 
 	/**
@@ -241,7 +192,87 @@ public class MVKServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-	}
 
+		String requestvalue[] = request.getParameterValues("do");
+		String charset = "UTF-8";
+		if (requestvalue != null) {
+			if (requestvalue[0].equals("answerForm")) {
+				String form_id = request.getParameterValues("formID")[0];
+				String form_page = request.getParameterValues("formPage")[0];
+
+				URL url = new URL(mvk + "/" + form_id + "/pages/" + form_page);
+				System.out.println("url: "+ url.toString());
+				HttpURLConnection connection = (HttpURLConnection) url
+						.openConnection();
+				connection.setRequestMethod("PUT");
+				connection.setRequestProperty("Authorization",
+						"Bearer cf70be6c-9dcd-11e1-8c70-12313c036113");
+				connection.setRequestProperty(
+						"Accept", 
+						"application/vnd-riv.infrastructure.supportservices.forminteraction.Form.v1+xml");
+				connection
+						.setRequestProperty(
+								"Content-Type",
+								"application/vnd-riv.infrastructure.supportservices.forminteraction.PageAnswer.v1+xml");
+				String query = request.getParameterValues("formAnswers")[0];
+				System.out.println("query:\n"+ query);
+				connection.setDoOutput(true);
+				try {
+					OutputStream output = connection.getOutputStream();
+					output.write(query.getBytes(charset));
+					output.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				int responsecode1 = connection.getResponseCode();
+				System.out.println(connection.getResponseCode() + ": "
+						+ connection.getResponseMessage());
+				Map<String, List<String>> map1 = connection.getHeaderFields();
+				for (Map.Entry<String, List<String>> entry : map1.entrySet()) {
+					System.out.println("Key : " + entry.getKey()
+							+ " , Value : " + entry.getValue());
+				}
+				if (responsecode1 == 200) {
+					try {
+						InputStream is = connection.getInputStream();
+						BufferedReader br = new BufferedReader(
+								new InputStreamReader(is));
+						String inputLine = null;
+
+						OutputStream out = response.getOutputStream();
+						StringBuffer buffer = new StringBuffer();
+
+						while ((inputLine = br.readLine()) != null) {
+							if (inputLine.trim().length() == 0) {
+								continue;
+							} else {
+								System.out.println(inputLine);
+								buffer.append((inputLine + "\n"));
+							}
+						}
+						out.write(buffer.toString().getBytes());
+
+					} catch (Exception e) {
+						e.printStackTrace();
+						RequestDispatcher headerview = request
+								.getRequestDispatcher("html/error.html");
+						headerview.include(request, response);
+
+					} finally {
+						if (connection != null)
+							connection.disconnect();
+					}
+				}
+				
+				else {
+					RequestDispatcher headerview = request
+							.getRequestDispatcher("html/error.html");
+					headerview.include(request, response);
+					
+				}
+			}
+
+		}
+	}
 }

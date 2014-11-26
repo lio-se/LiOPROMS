@@ -44,15 +44,18 @@
 		  });
 	  });
 	  $("#answer_form_button").click(function() {
+		  
 		  var form_id = $("#answer_form").find("#form_id").val();
 		  var form_page = $("#answer_form").find("#form_page").val();
 		  var form_answers = $("#answer_form").find("#formpage_answers").val();
 		  $("#answer_form").find("#result").replaceWith("<div id=\"result\">" +
-			 		"Resultat:<br/><textarea style=\"width:800px; height:200px\">Svarar formulär...</textarea></div>");
+			 		"Resultat:<br/><textarea style=\"width:800px; height:200px\">Svarar formulär " + 
+			 		form_id + ", sida "+form_page+"</textarea></div>");
 		  
 		  $.ajax({
 			  url :url, 
 			  accept: "xml",
+			  type: "POST",
 			  data:{
 				  "do" : "answerForm",
 				  "formID" : form_id,
@@ -61,7 +64,7 @@
 			  },
 			  success: function(data){
 				  console.log(data);
-				 $("#get_form").find("#result").replaceWith("<div id=\"result\">" +
+				 $("#answer_form").find("#result").replaceWith("<div id=\"result\">" +
 				 		"Resultat:<br/><textarea style=\"width:800px; height:200px\">"+data+"</textarea></div>");
 			  }
 		
