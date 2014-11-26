@@ -70,4 +70,24 @@
 		
 		  });
 	  });
+	  $("#complete_form_button").click(function() {
+		  var form_id = $("#complete_form").find("#form_id").val(); 
+		  $("#complete_form").find("#result").replaceWith("<div id=\"result\">" +
+	 		"Avslutar formulär...</div>");
+		  
+		  $.ajax({
+			  url :url, 
+			  accept: "xml",
+			  data:{
+				  "do" : "completeForm",
+				  "formID" : form_id,
+			  },
+			  success: function(data){
+				  console.log(data);
+				 $("#get_form").find("#result").replaceWith("<div id=\"result\">" +
+					 		"Resultat: "+data+"</div>");
+				 }
+		
+		  });
+	  });
   });
